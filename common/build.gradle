@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+}
+
+group 'dev.id2r'
+version '$parent.version'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
