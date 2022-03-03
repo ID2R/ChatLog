@@ -6,11 +6,16 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.logging.Logger;
 
+/**
+ * @author AkramL
+ * @param <L> Loader (or Plugin) superclass
+ * @since 1.0-BETA
+ */
 @RequiredArgsConstructor
 public abstract class PlatformPlugin<L> {
 
     @Getter private final L loader;
-    @Getter private final LibraryLoader libraryLoader = new LibraryLoader();
+    @Getter private final LibraryLoader libraryLoader = new LibraryLoader(this);
 
     public abstract Logger getLogger();
 
