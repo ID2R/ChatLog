@@ -1,5 +1,6 @@
 package dev.id2r.chatlog.common.dependency;
 
+import dev.id2r.chatlog.common.plugin.PlatformPlugin;
 import lombok.Data;
 
 import java.io.File;
@@ -9,6 +10,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.logging.Level;
 
 /**
  * @author DirectPlan
@@ -17,10 +19,12 @@ public class LibraryLoader {
 
     private final File DEPENDENCY_DIRECTORY = new File("dependencies/");
     private final Deque<CachedDependency> cachedDependencies = new ArrayDeque<>();
+    private final PlatformPlugin<?> plugin;
 
-    public LibraryLoader() {
+    public LibraryLoader(final PlatformPlugin<?> plugin) {
+        this.plugin = plugin;
         if(DEPENDENCY_DIRECTORY.mkdirs()) {
-            System.out.println("Created dependency directory '" + DEPENDENCY_DIRECTORY.getPath() + "'...");
+            plugin.getLogger().log(Level.INFO, String.format("Created dependency directory '%s'...", DEPENDENCY_DIRECTORY.getPath()));
         }
     }
 
@@ -42,7 +46,7 @@ public class LibraryLoader {
     }
 
     public void loadDependencyToRuntime(File file) {
-        System.out.println("Loading dependency '" + file.getName() + "' to runtime...");
+        plugin.getLogger().log(Level.INFO, String.format("Loading dependency '%s' to runtime...", file.getName()));
         try {
             java.net.URL url = file.toURI().toURL();
             java.lang.reflect.Method method = java.net.URLClassLoader.
@@ -58,7 +62,7 @@ public class LibraryLoader {
 
         File[] files = dependencyDirectory.listFiles();
         if(files == null || files.length == 0) {
-            System.out.println("The specified directory '" + dependencyDirectory.getPath()+" does not exist");
+            plugin.getLogger().log(Level.SEVERE, String.format("The specified directory '%s' does not exist", dependencyDirectory.getPath()));
             return;
         }
         int trackedAmount = 0;
@@ -67,15 +71,15 @@ public class LibraryLoader {
             loadDependencyToRuntime(file);
             trackedAmount++;
         }
-        System.out.println("Loaded " + trackedAmount + " dependencies!");
+        plugin.getLogger().log(Level.INFO, String.format("Loaded %d dependencies!", trackedAmount));
     }
     public void loadDependencies() {
-        System.out.println("Loading libraries...");
+        plugin.getLogger().log(Level.INFO, "Loading libraries...");
         loadDependenciesFromFolder(DEPENDENCY_DIRECTORY);
     }
 
     public void loadDependencies(Class<?> clazz) {
-        System.out.println("Loading libraries...");
+        plugin.getLogger().log(Level.INFO, "Loading libraries...");
 
         MavenDependency[] dependencies =  clazz.getAnnotationsByType(MavenDependency.class);
         for (MavenDependency dependency : dependencies) {
@@ -98,7 +102,7 @@ public class LibraryLoader {
             loadDependencyToRuntime(cachedDependency.getDependencyFile());
             delay();
         }
-        System.out.println("Loaded " + cachedDependencies.size() + " dependencies!");
+        plugin.getLogger().log(Level.INFO, String.format("Loaded %d dependencies!", cachedDependencies.size()));
         cachedDependencies.clear();
     }
 
@@ -122,18 +126,18 @@ public class LibraryLoader {
         if(!file.exists()) {
             existed = false;
             try {
-                System.out.println("Downloading dependency '" + displayName + "'...");
+                plugin.getLogger().log(Level.INFO, String.format("Downloading dependency '%s'...", displayName));
                 URL url = dependency.getUrl();
                 try (InputStream is = url.openStream()) {
                     Files.copy(is, file.toPath());
                 }
 
-                System.out.println("Download for dependency '" + displayName + "' has complete.");
+                plugin.getLogger().log(Level.INFO, String.format("Download for dependency '%s' has complete.", displayName));
                 return file;
             } catch (Exception ignored) {}
         }
         if(!existed) { // This means that it went through the download process and failed
-            System.out.println("Could not download dependency: " + displayName);
+            plugin.getLogger().log(Level.INFO, "Could not download dependency: " + displayName);
             return null;
         }
         return file;
