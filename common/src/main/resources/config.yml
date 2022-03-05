@@ -1,0 +1,93 @@
+#_________ .__            __  .____
+#\_   ___ \|  |__ _____ _/  |_|    |    ____   ____
+#/    \  \/|  |  \\__  \\   __\    |   /  _ \ / ___\
+#\     \___|   Y  \/ __ \|  | |    |__(  <_> ) /_/  >
+# \______  /___|  (____  /__| |_______ \____/\___  /
+#        \/     \/     \/             \/    /_____/
+# ChatLog by McLive
+# Updated and maintained by ID2R Development Team
+# https://github.com/ID2R/ChatLog
+
+#################################################
+#               DATABASE SETTINGS               #
+#################################################
+# - database.enabled                            #
+# If you enable this, you will use database     #
+# and custom PHP script to host your ChatLog.   #
+# If it's disabled, it will use our cloud-based #
+# ChatLog system.                               #
+# default: false                                #
+#                                               #
+# - database.type                               #
+# Available types for now: MYSQL, MONGO         #
+# This won't work if you disabled database      #
+# default: MYSQL                                #
+#                                               #
+# - database.authentication                     #
+# Here you set up the credentials of your data- #
+# base connection.                              #
+#################################################
+database:
+  enabled: false
+  type: MYSQL
+    host: localhost
+    port: 3306
+  authentication:
+    username: sqluser
+    password: cheese
+
+#################################################
+#            GLOBAL PLUGIN SETTINGS             #
+#################################################
+# - options.minigames-mode                      #
+# If enabled, it will show every message from a #
+# user since the plugin has started.            #
+# default: false                                #
+#                                               #
+# - options.ignore-cancelled                    #
+# If enabled, it won't log cancelled player's   #
+# messages.                                     #
+# default: true                                 #
+#                                               #
+# - options.url                                 #
+# Here will be the link of player's ChatLog     #
+# which the plugin recorded.                    #
+# default: ID2R'S Cloud-based URL               #
+#                                               #
+# - options.server-name                         #
+# This function is spigot only. It will         #
+# determine the name of the current server.     #
+# default: Default                              #
+#################################################
+options:
+  minigames-mode: false
+  ignore-cancelled: true
+  url: 'http://id2r.dev/chatlog?report='
+  server-name: Default
+
+#################################################
+#             LOG CLEANUP SETTINGS              #
+#################################################
+cleanup:
+  enabled: false
+  since: 14
+
+#################################################
+#              LOG BYPASS SETTINGS              #
+#################################################
+# - bypass.permission                           #
+# If you want to make players with permission   #
+# 'chatlog.bypass' prevented from chat logging  #
+# system, just enable this option               #
+#                                               #
+# - bypass.starts-with                          #
+# If the message starts with the provided text  #
+# at 'bypass.starts-with.value' section, it     #
+# won't be logged.                              #
+#################################################
+bypass:
+  permission:
+    enabled: false
+  starts-with:
+    enabled: false
+    value: '#'

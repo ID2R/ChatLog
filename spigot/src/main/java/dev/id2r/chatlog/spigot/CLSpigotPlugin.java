@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Logger;
 
 @MavenDependency(groupId = "com.zaxxer", artifactId = "HikariCP", version = "4.0.3")
+@MavenDependency(groupId = "ch.jalu", artifactId = "configme", version = "1.3.0")
 public class CLSpigotPlugin extends PlatformPlugin<JavaPlugin> {
 
     public CLSpigotPlugin(JavaPlugin loader) {
