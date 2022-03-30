@@ -1,7 +1,7 @@
 package dev.id2r.chatlog.common.connection;
 
 /**
- * @author AkramL
+ * @author Akram Louze
  * @param <P> Connection pool
  * @since 1.0-BETA
  */

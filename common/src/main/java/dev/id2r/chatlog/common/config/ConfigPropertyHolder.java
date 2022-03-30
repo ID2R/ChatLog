@@ -6,7 +6,7 @@ import dev.id2r.chatlog.common.connection.database.DatabaseType;
 import lombok.Getter;
 
 /**
- * @author AkramL
+ * @author Akram Louze
  * @since 1.0-BETA
  */
 @Getter

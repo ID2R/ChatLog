@@ -1,7 +1,7 @@
 package dev.id2r.chatlog.common.connection;
 
 /**
- * @author AkramL
+ * @author Akram Louze
  */
 public enum ConnectionState {
 

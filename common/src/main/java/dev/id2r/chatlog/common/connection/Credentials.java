@@ -3,7 +3,7 @@ package dev.id2r.chatlog.common.connection;
 import lombok.Getter;
 
 /**
- * @author AkramL
+ * @author Akram Louze
  * @since 1.0-BETA
  */
 @Getter

@@ -1,7 +1,7 @@
 package dev.id2r.chatlog.common.connection.database;
 
 /**
- * @author AkramL
+ * @author Akram Louze
  * @since 1.0-BETA
  */
 public enum DatabaseType {

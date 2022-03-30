@@ -1,10 +1,10 @@
-package dev.id2r.chatlog.common.connection.sql;
+package dev.id2r.chatlog.common.connection.database.sql;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import dev.id2r.chatlog.common.connection.ConnectionState;
 import dev.id2r.chatlog.common.connection.Credentials;
-import dev.id2r.chatlog.common.connection.IConnection;
+import dev.id2r.chatlog.common.connection.database.DatabaseConnection;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.Connection;
@@ -13,11 +13,11 @@ import java.sql.SQLException;
 import java.util.Locale;
 
 /**
- * @author AkramL
+ * @author Akram Louze
  * @since 1.0-BETA
  */
 @RequiredArgsConstructor
-public class SQLConnection implements IConnection<HikariDataSource> {
+public class SQLConnection extends DatabaseConnection<HikariDataSource> {
 
     private final Credentials credentials;
     private HikariDataSource dataSource;
@@ -75,9 +75,23 @@ public class SQLConnection implements IConnection<HikariDataSource> {
         }
         return ConnectionState.DUMMY;
     }
-
     @Override
     public Credentials getCredentials() {
-        return null;
+        return credentials;
+    }
+
+    @Override
+    public SQLDatabase provideDatabase() {
+        return new SQLDatabase(this);
+    }
+
+    @Override
+    public Connection getResource() {
+        try (final Connection connection = getPool().getConnection()) {
+            return connection;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return null;
+        }
     }
 }

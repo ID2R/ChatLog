@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.logging.Logger;
 
 /**
- * @author AkramL
+ * @author Akram Louze
  * @param <L> Loader (or Plugin) superclass
  * @since 1.0-BETA
  */
